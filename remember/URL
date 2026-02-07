@@ -1,0 +1,3 @@
+https://schemas.opencustodian.org/envelope/1.0.json
+https://schemas.opencustodian.org/envelope/1.1.json
+https://schemas.opencustodian.org/envelope/latest.json (redirects to 1.1)
