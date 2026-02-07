@@ -1,1 +1,0 @@
-The generator files for this schema to just work tm
