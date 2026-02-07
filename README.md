@@ -11,5 +11,5 @@ A standard for publishing Proof Of Solvency: proof-of-reserves, proof-of-liabili
 
 ## Links
 - [Full Specification](./SPECIFICATION.md)
-- [Examples](./examples/)
+- [Examples](/envelope/v0.1/examples/)
 - [Validators](./tools/validators/)
