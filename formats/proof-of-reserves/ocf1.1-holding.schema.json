@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1.1-holding.schema.json",
+  "title": "Proof-of-Reserves Holdings",
+  "OCF": "1.1",
+  "version": "DRAFT",
+  "description": "Proof-of-reserves payload format that supports inline data or mapping from external datasets (csv/json/yaml/vk).",
+  "type": "object",
+  "properties": {
+    "snapshotAt": {
+      "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/snapshotAt"
+    },
+    "holdings": {
+      "$ref": "#/$defs/holdings"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional human-readable notes about the reserve snapshot."
+    }
+  },
+  "required": [
+    "snapshotAt",
+    "holdings"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "holdingRecord": {
+      "type": "object",
+      "description": "Single reserve holding record (address-level).",
+      "properties": {
+        "assetSymbol": {
+          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/assetSymbol"
+        },
+        "network": {
+          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/network"
+        },
+        "address": {
+          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/address"
+        },
+        "balance": {
+          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/balance"
+        },
+        "blockHeight": {
+          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/blockHeight"
+        },
+        "thirdPartyCustodianName": {
+          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/thirdPartyCustodianName"
+        }
+      },
+      "required": [
+        "assetSymbol",
+        "network",
+        "address",
+        "balance"
+      ],
+      "additionalProperties": false
+    },
+    "holdingFieldSelector": {
+      "allOf": [
+        {
+          "$ref": "https://github.com/opencustodian/schemas/formats/common-definitions.schema.json#/$defs/fieldSelector"
+        },
+        {
+          "properties": {
+            "fieldName": {
+              "enum": [
+                "assetSymbol",
+                "network",
+                "address",
+                "balance",
+                "blockHeight",
+                "thirdPartyCustodianName"
+              ]
+            }
+          },
+          "required": [
+            "fieldName"
+          ]
+        }
+      ]
+    },
+    "holdingsInline": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "inline"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/holdingRecord"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "format",
+        "records"
+      ],
+      "additionalProperties": false
+    },
+    "holdingsExternal": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "external"
+        },
+        "externalFileIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Index into metadata.externalDataSources.files."
+        },
+        "fieldMappings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/holdingFieldSelector"
+          },
+          "minItems": 1,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "fieldName": {
+                    "const": "assetSymbol"
+                  }
+                },
+                "required": [
+                  "fieldName"
+                ]
+              }
+            },
+            {
+              "contains": {
+                "properties": {
+                  "fieldName": {
+                    "const": "network"
+                  }
+                },
+                "required": [
+                  "fieldName"
+                ]
+              }
+            },
+            {
+              "contains": {
+                "properties": {
+                  "fieldName": {
+                    "const": "address"
+                  }
+                },
+                "required": [
+                  "fieldName"
+                ]
+              }
+            },
+            {
+              "contains": {
+                "properties": {
+                  "fieldName": {
+                    "const": "balance"
+                  }
+                },
+                "required": [
+                  "fieldName"
+                ]
+              }
+            }
+          ]
+        },
+        "csv": {
+          "type": "object",
+          "description": "CSV parsing hints when external format is csv.",
+          "properties": {
+            "hasHeader": {
+              "type": "boolean",
+              "default": true
+            },
+            "delimiter": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1,
+              "default": ","
+            }
+          },
+          "additionalProperties": false
+        },
+        "jsonRecordPath": {
+          "type": "string",
+          "description": "JSON Pointer or dot-path to the array of holding records when external format is json."
+        },
+        "yamlRecordPath": {
+          "type": "string",
+          "description": "YAML path (JSON Pointer or dot-notation) to the array of holding records when external format is yaml."
+        }
+      },
+      "required": [
+        "format",
+        "externalFileIndex",
+        "fieldMappings"
+      ],
+      "additionalProperties": false
+    },
+    "holdings": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/holdingsInline"
+        },
+        {
+          "$ref": "#/$defs/holdingsExternal"
+        }
+      ]
+    }
+  }
+}

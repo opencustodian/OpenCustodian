@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json",
+  "title": "Proof-of-Reserves Field Registry",
+  "OCF": "1",
+  "version": "DRAFT",
+  "description": "Canonical field definitions reused by Proof-of-Reserves profiles.",
+  "$defs": {
+    "snapshotAt": {
+      "type": "string",
+      "description": "Timestamp for the reserve snapshot.",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "assetSymbol": {
+      "type": "string",
+      "description": "Ticker or chain-native asset symbol.",
+      "minLength": 2,
+      "maxLength": 20
+    },
+    "network": {
+      "type": "string",
+      "description": "Network or chain identifier (e.g., ETH, BTC, SOL).",
+      "minLength": 2,
+      "maxLength": 30
+    },
+    "address": {
+      "type": "string",
+      "description": "Address or account identifier holding reserves.",
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "balance": {
+      "type": "string",
+      "description": "Balance for the address, encoded as decimal string.",
+      "pattern": "^-?(0|[1-9]\\d*)(?:\\.\\d+)?$"
+    },
+    "blockHeight": {
+      "type": "integer",
+      "description": "Block height or ledger height of the snapshot.",
+      "minimum": 0
+    },
+    "thirdPartyCustodianName": {
+      "type": "string",
+      "description": "Optional third-party custodian name for the address (may be empty)."
+    },
+    "totalReserveAmount": {
+      "type": "string",
+      "description": "Total reserve quantity for the asset, encoded as decimal string.",
+      "pattern": "^-?(0|[1-9]\\d*)(?:\\.\\d+)?$"
+    },
+    "merkleRoot": {
+      "type": "string",
+      "description": "Merkle root (hex) committing to liabilities for this snapshot.",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "liabilityDatasetRef": {
+      "type": "integer",
+      "description": "Index pointer to the liabilities dataset in schema.externalDataSources.files.",
+      "minimum": 0
+    }
+  }
+}

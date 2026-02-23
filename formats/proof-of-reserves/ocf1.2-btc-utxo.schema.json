@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1.2-btc-utxo.schema.json",
+  "title": "Proof-of-Reserves BTC UTXO Snapshot",
+  "OCF": "1.2",
+  "version": "DRAFT",
+  "description": "Proof-of-reserves payload for a BTC UTXO snapshot exported as YAML.",
+  "type": "object",
+  "properties": {
+    "height": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "blockhash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "chain": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 20
+    },
+    "claim": {
+      "$ref": "#/$defs/claim"
+    },
+    "total": {
+      "$ref": "#/$defs/amountLike"
+    },
+    "keys": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Fa-f0-9]{66,130}$"
+      },
+      "minItems": 1
+    },
+    "xpub": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 120
+      },
+      "minItems": 1
+    },
+    "address": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/addressRecord"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "height",
+    "blockhash",
+    "chain",
+    "claim",
+    "total",
+    "address"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "amountLike": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)(?:\\.\\d+)?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ]
+    },
+    "claim": {
+      "type": "object",
+      "properties": {
+        "m": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "n": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "m",
+        "n"
+      ],
+      "additionalProperties": false
+    },
+    "addressRecord": {
+      "type": "object",
+      "properties": {
+        "addr_type": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 40
+        },
+        "addr": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "script": {
+          "type": "string",
+          "minLength": 6
+        },
+        "balance": {
+          "$ref": "#/$defs/amountLike"
+        }
+      },
+      "required": [
+        "addr_type",
+        "addr",
+        "balance"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

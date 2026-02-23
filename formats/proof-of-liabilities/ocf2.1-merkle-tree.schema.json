@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2.1-merkle-tree.schema.json",
+  "title": "Merkle Tree Proof-of-Liabilities Standard",
+  "OCF": "2.1",
+  "version": "DRAFT",
+  "description": "Proof-of-liabilities payload format that supports inline user data or mapping from external datasets (csv/json/yaml).",
+  "type": "object",
+  "properties": {
+    "snapshotAt": {
+      "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/snapshotAt"
+    },
+    "liabilityBreakdown": {
+      "type": "object",
+      "description": "Optional breakdown of liabilities by type (user-balance, rewards, etc.) with totals.",
+      "additionalProperties": {
+        "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/totalLiabilityAmount"
+      }
+    },
+    "users": {
+      "$ref": "#/$defs/users"
+    },
+    "merkleRoot": {
+      "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/merkleRoot",
+      "description": "Merkle root (hex) committing to the complete set of user liabilities included in this snapshot."
+    },
+    "userCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of users with non-zero liability."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional human-readable notes about the liability snapshot."
+    }
+  },
+  "required": [
+    "snapshotAt",
+    "users",
+    "merkleRoot"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "userRecord": {
+      "type": "object",
+      "description": "Single user liability record.",
+      "properties": {
+        "userId": {
+          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/userId"
+        },
+        "balances": {
+          "type": "object",
+          "description": "Per-asset balance map.",
+          "additionalProperties": {
+            "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/balance"
+          },
+          "minProperties": 1
+        }
+      },
+      "required": [
+        "userId",
+        "balances"
+      ],
+      "additionalProperties": false
+    },
+    "userFieldSelector": {
+      "allOf": [
+        {
+          "$ref": "https://github.com/opencustodian/schemas/formats/common-definitions.schema.json#/$defs/fieldSelector"
+        },
+        {
+          "properties": {
+            "fieldName": {
+              "enum": [
+                "userId",
+                "balances"
+              ]
+            }
+          },
+          "required": [
+            "fieldName"
+          ]
+        }
+      ]
+    },
+    "usersInline": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "inline"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/userRecord"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "format",
+        "records"
+      ],
+      "additionalProperties": false
+    },
+    "usersExternal": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "external"
+        },
+        "externalFileIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Index into metadata.externalDataSources.files."
+        },
+        "fieldMappings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/userFieldSelector"
+          },
+          "minItems": 1,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "fieldName": {
+                    "const": "userId"
+                  }
+                },
+                "required": [
+                  "fieldName"
+                ]
+              }
+            },
+            {
+              "contains": {
+                "properties": {
+                  "fieldName": {
+                    "const": "balances"
+                  }
+                },
+                "required": [
+                  "fieldName"
+                ]
+              }
+            }
+          ]
+        },
+        "csv": {
+          "type": "object",
+          "description": "CSV parsing hints when external format is csv.",
+          "properties": {
+            "hasHeader": {
+              "type": "boolean",
+              "default": true
+            },
+            "delimiter": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1,
+              "default": ","
+            }
+          },
+          "additionalProperties": false
+        },
+        "jsonRecordPath": {
+          "type": "string",
+          "description": "JSON Pointer or dot-path to the array of user records when external format is json."
+        },
+        "yamlRecordPath": {
+          "type": "string",
+          "description": "YAML path (JSON Pointer or dot-notation) to the array of user records when external format is yaml."
+        }
+      },
+      "required": [
+        "format",
+        "externalFileIndex",
+        "fieldMappings"
+      ],
+      "additionalProperties": false
+    },
+    "users": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/usersInline"
+        },
+        {
+          "$ref": "#/$defs/usersExternal"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json",
+  "title": "OCF2 Proof-of-Liabilities Field Registry",
+  "OCF": "2",
+  "version": "DRAFT",
+  "description": "Canonical field definitions reused by Proof-of-Liabilities profiles.",
+  "$defs": {
+    "snapshotAt": {
+      "type": "string",
+      "description": "Timestamp for the liabilities snapshot.",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "userId": {
+      "type": "string",
+      "description": "Unique identifier for a user account.",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "assetSymbol": {
+      "type": "string",
+      "description": "Ticker or chain-native asset symbol.",
+      "minLength": 2,
+      "maxLength": 20
+    },
+    "balance": {
+      "type": "string",
+      "description": "Balance amount, encoded as decimal string.",
+      "pattern": "^-?(0|[1-9]\\d*)(?:\\.\\d+)?$"
+    },
+    "totalLiabilityAmount": {
+      "type": "string",
+      "description": "Total liability quantity for an asset, encoded as decimal string.",
+      "pattern": "^-?(0|[1-9]\\d*)(?:\\.\\d+)?$"
+    },
+    "merkleRoot": {
+      "type": "string",
+      "description": "Merkle root (hex) committing to the full set of user liabilities.",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "liabilityType": {
+      "type": "string",
+      "description": "Category of liability (e.g., user-balance, earned-rewards, lending-obligation, insurance-reserve).",
+      "minLength": 2,
+      "maxLength": 50
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://github.com/opencustodian/schemas/formats/common-definitions.schema.json",
+	"title": "External file reference",
+	"type": "object",
+	"description": "Single external file entry referenced by index.",
+	"properties": {
+		"index": {
+			"type": "integer",
+			"minimum": 0,
+			"description": "0-based index used by payload to reference this external file."
+		},
+		"uri": {
+			"type": "string",
+			"description": "URI or path to the external file (e.g., file:///path/to/data.csv, https://example.com/data.csv)."
+		},
+		"format": {
+			"$ref": "#/$defs/fileFormat"
+		},
+		"encoding": {
+			"type": "string",
+			"description": "Character encoding of the external file.",
+			"default": "utf-8",
+			"examples": [
+				"utf-8",
+				"ascii",
+				"iso-8859-1"
+			]
+		},
+		"hash": {
+			"$ref": "#/$defs/hashValue"
+		}
+	},
+	"required": [
+		"index",
+		"format",
+		"encoding",
+		"hash"
+	],
+	"additionalProperties": false,
+
+	"$defs": {
+		"fileFormat": {
+			"title": "File format",
+			"type": "string",
+			"enum": [
+				"csv",
+				"json",
+				"yaml",
+				"vk"
+			],
+			"description": "Allowed formats for external data files."
+		},
+
+		"fieldSelector": {
+			"title": "Field selector",
+			"type": "object",
+			"description": "Common way to reference and extract a field from an external file regardless of format.",
+			"properties": {
+				"externalFileIndex": {
+					"type": "integer",
+					"minimum": 0,
+					"description": "Index of the external file (as declared in metadata.externalDataSources.files) to extract this field from."
+				},
+				"fieldName": {
+					"type": "string",
+					"description": "The required field name in the standard."
+				},
+				"csv": {
+					"type": "object",
+					"description": "CSV-specific field location.",
+					"properties": {
+						"columnName": {
+							"type": "string",
+							"description": "Column header name (if hasHeader is true)."
+						},
+						"columnIndex": {
+							"type": "integer",
+							"minimum": 0,
+							"description": "0-based column index."
+						}
+					},
+					"anyOf": [
+						{
+							"required": ["columnName"]
+						},
+						{
+							"required": ["columnIndex"]
+						}
+					],
+					"additionalProperties": false
+				},
+				"json": {
+					"type": "object",
+					"description": "JSON-specific field location.",
+					"properties": {
+						"path": {
+							"type": "string",
+							"description": "JSON Pointer path (RFC 6901) or dot-notation path to the field (e.g., 'data.signature' or '/data/signature')."
+						}
+					},
+					"required": ["path"],
+					"additionalProperties": false
+				},
+				"yaml": {
+					"type": "object",
+					"description": "YAML-specific field location.",
+					"properties": {
+						"path": {
+							"type": "string",
+							"description": "YAML path using JSON Pointer (RFC 6901) or dot-notation to the field (e.g., 'data.signature' or '/data/signature')."
+						}
+					},
+					"required": ["path"],
+					"additionalProperties": false
+				}
+			},
+			"required": ["externalFileIndex", "fieldName"],
+			"anyOf": [
+				{
+					"required": ["csv"]
+				},
+				{
+					"required": ["json"]
+				},
+				{
+					"required": ["yaml"]
+				}
+			],
+			"additionalProperties": false
+		},
+
+		"hashValue": {
+			"title": "Hash value",
+			"type": "object",
+			"description": "Cryptographic hash of the external file for integrity verification.",
+			"properties": {
+				"algorithm": {
+					"type": "string",
+					"enum": [
+						"sha256"
+					],
+					"description": "Hash algorithm used."
+				},
+				"value": {
+					"type": "string",
+					"pattern": "^[A-Fa-f0-9]{64}$",
+					"description": "Hexadecimal hash value."
+				}
+			},
+			"required": [
+				"algorithm",
+				"value"
+			],
+			"additionalProperties": false
+		}
+	}
+}
