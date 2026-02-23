@@ -1,0 +1,25 @@
+{
+  "$schema": "https://github.com/opencustodian/schemas/envelope.schema.json",
+  "$comment": "Dummy data",
+  "metadata": {
+    "format": "OpenCustodian",
+    "version": "0.0.1",
+    "generatedAt": "2026-01-01T00:00:00Z",
+    "custodian": {
+      "name": "Dummy Custodian",
+      "custodianId": "dummy.example"
+    }
+  },
+  "proofObjects": [
+  ],
+  "hashSignature": {
+    "contentHash": {
+      "algorithm": "SHA-256",
+      "value": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    },
+    "custodianSignature": {
+      "algorithm": "Ed25519",
+      "value": "DUMMY_SIGNATURE_BASE64_OR_HEX"
+    }
+  }
+}

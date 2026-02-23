@@ -1,1 +1,189 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/opencustodian/schemas/envelope.schema.json",
+    "title": "OpenCustodian Envelope Schema",
+    "type": "object",
+    "description": "OpenCustodian top-level envelope schema. Specification located at https://github.com/opencustodian/specifications/blob/main/envelope.md",
 
+    "properties": {
+        "$schema": {
+            "title": "Schema",
+            "type": "string",
+            "format": "uri-reference",
+            "description": "The schema that the document should conform to. This should be the URL of a version of the OpenCustodian JSON schemas available under https://github.com/opencustodian/specifications/tree/main/schemas."
+        },
+
+        "$comment": {
+            "title": "Comment",
+            "type": "string",
+            "description": "An optional comment string that can be used to document the purpose of the file."
+        },
+
+        "metadata": {
+            "$ref": "#/$metadata/main"
+        },
+
+        "proofObjects": {
+            "$ref": "#/$top/proofObjects"
+        },
+
+        "hashSignature": {
+            "$ref": "#/$hashSignature/main"
+        }
+    },
+
+    "required": [
+        "metadata",
+        "proofObjects",
+        "hashSignature"
+    ],
+    "additionalProperties": false,
+
+    "$metadata": {
+        "main": {
+            "title": "Envelope metadata",
+            "type": "object",
+            "properties": {
+                "format": {
+                    "title": "Envelope format",
+                    "type": "string",
+                    "const": "OpenCustodian"
+                },
+                "version": {
+                    "title": "Envelope version",
+                    "$ref": "#/$definitions/semver"
+                },
+                "generatedAt": {
+                    "title": "Generation timestamp",
+                    "$ref": "#/$definitions/iso8601DateTime"
+                },
+                "custodian": {
+                    "$ref": "#/$metadata/custodian"
+                }
+            },
+            "required": [
+                "format",
+                "version",
+                "generatedAt",
+                "custodian"
+            ],
+            "additionalProperties": false
+        },
+
+        "custodian": {
+            "title": "Custodian identity",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Human-readable name of the custodian."
+                },
+                "custodianId": {
+                    "type": "string",
+                    "description": "Stable identifier for the custodian (e.g., domain name or URN)."
+                }
+            },
+            "required": [
+                "name",
+                "custodianId"
+            ],
+            "additionalProperties": false
+        }
+    },
+
+    "$top": {
+        "proofObjects": {
+            "title": "Proof objects",
+            "type": "array",
+            "description": "Array of proof objects formatted according to standards defined in separate specification files.",
+            "items": {
+                "$ref": "proofObjects.schema.json"
+            }
+        }
+    },
+
+    "$hashSignature": {
+        "main": {
+            "title": "Hash and signature envelope",
+            "type": "object",
+            "properties": {
+                "contentHash": {
+                    "$ref": "#/$hashSignature/contentHash"
+                },
+                "custodianSignature": {
+                    "$ref": "#/$hashSignature/custodianSignature"
+                }
+            },
+            "required": [
+                "contentHash"
+            ],
+            "additionalProperties": false
+        },
+
+        "contentHash": {
+            "title": "Content hash",
+            "type": "object",
+            "properties": {
+                "algorithm": {
+                    "type": "string",
+                    "enum": [
+                        "SHA-256"
+                    ],
+                    "description": "Identifier of the hash algorithm used for the hash."
+                },
+                "value": {
+                    "$ref": "#/$definitions/hashHex64"
+                }
+            },
+            "required": [
+                "algorithm",
+                "value"
+            ],
+            "additionalProperties": false
+        },
+
+        "custodianSignature": {
+            "title": "Custodian signature",
+            "type": "object",
+            "properties": {
+                "algorithm": {
+                    "type": "string",
+                    "enum": [
+                        "Ed25519"
+                    ],
+                    "description": "Identifier of the signature algorithm used for custodianSignature."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Cryptographic signature from the custodian committing to the content hash."
+                }
+            },
+            "required": [
+                "algorithm",
+                "value"
+            ],
+            "additionalProperties": false
+        }
+    },
+
+    "$definitions": {
+        "semver": {
+            "title": "Semantic version",
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*))?$",
+            "description": "Version string in semver-like format: major.minor or major.minor.patch."
+        },
+        "iso8601DateTime": {
+            "title": "ISO 8601 timestamp",
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Timestamp in ISO 8601 extended format (e.g. 2026-01-01T00:00:00Z)."
+        },
+        "hashHex64": {
+            "title": "Hex SHA-256 hash",
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "Lowercase hexadecimal hash value with 64 characters (e.g., SHA-256)."
+        }
+    }
+}

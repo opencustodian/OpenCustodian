@@ -1,15 +1,205 @@
-# OpenCustodian Envelope Schema
+# OpenCustodian
 
-A standard for publishing Proof Of Solvency: proof-of-reserves, proof-of-liabilities, and user info.
+**An open standard for exchanges and custodians to declare Proof of Reserves, Proof of Liabilities, and User Information in a standardized, machine-readable format.**
 
-- **Latest version**: 0.1
-- **Status**: Developing
-- **License**: MIT
+OpenCustodian enables applications, APIs, and AI agents to automatically understand and interact with exchange reserve data without requiring custom integrations for each platform.
+
+---
+
+## Project Structure
+
+OpenCustodian is organized into two main components:
+
+### 🔷 **OpenCustodian Core** (Stable)
+
+The core standard consists of two foundational schemas that define the container and proof object structure:
+
+- **[envelope.schema.json](envelope.schema.json)** - The outermost container that wraps all proof objects
+- **[proofObjects.schema.json](proofObjects.schema.json)** - The structure for individual proof objects
+
+These core schemas are **stable** and define the fundamental architecture of OpenCustodian. They provide:
+- Metadata structure for custodian identification
+- Proof object array container
+- Hash signature mechanism for data integrity
+- Extensible framework for any proof type
+
+### 🚧 **OpenCustodian Formats** (Experimental/Draft)
+
+The [formats/](formats/) directory contains **experimental and draft** format specifications:
+
+- **OCF1** - Proof-of-Reserves formats
+- **OCF2** - Proof-of-Liabilities formats  
+- **OCF3** - User Information formats (planned)
+
+**⚠️ Important:** These formats are provided as **examples** to demonstrate how proof formats can be designed within the OpenCustodian framework. They are **not finalized** and are intended for collaborative development with the community.
+
+See [formats/README.md](formats/README.md) for details on the experimental format specifications.
+
+---
 
 ## Quick Start
-[example JSON]
 
-## Links
-- [Full Specification](./SPECIFICATION.md)
-- [Examples](/envelope/v0.1/examples/)
-- [Validators](./tools/validators/)
+### Understanding the Standard
+
+1. Read [soul.md](soul.md) for the complete vision and philosophy
+2. Review [envelope.schema.json](envelope.schema.json) to understand the container structure
+3. Review [proofObjects.schema.json](proofObjects.schema.json) to understand proof object structure
+4. Explore [formats/](formats/) to see example format implementations
+
+### Using the Standard
+
+```json
+{
+  "$schema": "https://github.com/opencustodian/schemas/envelope.schema.json",
+  "metadata": {
+    "format": "OpenCustodian",
+    "version": "0.0.1",
+    "generatedAt": "2026-02-23T12:00:00Z",
+    "custodian": {
+      "name": "Example Exchange",
+      "custodianId": "example.exchange"
+    }
+  },
+  "proofObjects": [
+    {
+      "metadata": {
+        "type": "proof-of-reserves",
+        "format": "custom-or-ocf-format",
+        "version": "0.0.1"
+      },
+      "payload": {
+        /* Your proof data here */
+      }
+    }
+  ],
+  "hashSignature": {
+    "contentHash": {
+      "algorithm": "SHA-256",
+      "value": "..."
+    }
+  }
+}
+```
+
+### Validation & Testing
+
+```bash
+# Install dependencies
+npm install
+
+# Generate sample data
+npm run generate
+
+# Validate samples
+npm run validate
+
+# Run all tests
+npm test
+```
+
+---
+
+## Architecture
+
+### Core Components
+
+```
+OpenCustodian/
+├── envelope.schema.json          # 🔷 CORE: Outermost container
+├── proofObjects.schema.json      # 🔷 CORE: Proof object structure
+├── formats/                      # 🚧 EXPERIMENTAL: Format examples
+│   ├── common-definitions.schema.json
+│   ├── proof-of-reserves/
+│   ├── proof-of-liabilities/
+│   └── user-info/
+├── soul.md                       # Project philosophy & vision
+└── tests/                        # Validation & testing
+```
+
+### Separation of Concerns
+
+**Core Standard** (envelope + proof objects):
+- Defines the **container and structure**
+- Provides cryptographic integrity mechanisms
+- Enables **any proof format** to be wrapped and validated
+- Stable and ready for implementation
+
+**Format Specifications** (formats/):
+- Specific proof data structures
+- Domain-specific schemas (reserves, liabilities, user info)
+- **Under collaborative development**
+- Can evolve independently from core
+
+---
+
+## Key Features
+
+✅ **Machine-readable** - Fully JSON Schema validated  
+✅ **Composable** - Multiple proof types in one envelope  
+✅ **Cryptographically verifiable** - SHA-256 hashes + optional signatures  
+✅ **Network-agnostic** - Works with any blockchain or asset type  
+✅ **Extensible** - Add new proof formats without breaking existing ones  
+✅ **External data support** - Reference CSV, JSON, YAML datasets with hash verification  
+
+---
+
+## Use Cases
+
+### Immediate (Core Standard)
+- **Standard Container** - Wrap any proof data in a standardized envelope
+- **Data Integrity** - Cryptographically verify proof object contents
+- **Multi-Proof Documents** - Combine reserves, liabilities, and user data in one file
+- **Format Flexibility** - Use any proof format (custom or community-designed)
+
+### With OCF Formats (When Finalized)
+- **Automated Exchange Audits** - Verify reserve adequacy with standard tooling
+- **Regulatory Compliance** - Submit standardized proofs to regulators
+- **Solvency Verification** - Validate reserves against liabilities
+- **Cross-Exchange Analysis** - Compare exchanges using consistent metrics
+
+---
+
+## Status
+
+| Component | Status | Version |
+|-----------|--------|---------|
+| **Core: envelope.schema.json** | ✅ **Stable** | 0.0.1 |
+| **Core: proofObjects.schema.json** | ✅ **Stable** | 0.0.1 |
+| **Formats: OCF1 (Reserves)** | 🚧 **Draft** | DRAFT |
+| **Formats: OCF2 (Liabilities)** | 🚧 **Draft** | DRAFT |
+| **Formats: OCF3 (User Info)** | 📋 **Planned** | - |
+
+---
+
+## Documentation
+
+- **[soul.md](soul.md)** - Complete project vision, philosophy, and technical details
+- **[formats/README.md](formats/README.md)** - Experimental format specifications
+- **[envelope.sample.json](envelope.sample.json)** - Example envelope document
+- **[proofObjects.sample.json](proofObjects.sample.json)** - Example proof object
+
+---
+
+## Contributing
+
+OpenCustodian is designed as an open standard for the industry. We welcome:
+
+- **Core Standard Feedback** - Help refine the envelope and proof object schemas
+- **Format Collaboration** - Join the discussion on standardizing proof formats
+- **Implementation Examples** - Share how you've implemented OpenCustodian
+- **Tooling & Libraries** - Build parsers, validators, and integrations
+
+---
+
+## Vision
+
+**The vision: exchanges speak OpenCustodian, and anything built to understand OpenCustodian just works.**
+
+OpenCustodian aims to be the HTTP of exchange transparency - a universal standard that enables interoperability without custom integration for every platform.
+
+---
+
+## License
+
+[To be determined - suggest MIT or Apache 2.0 for open standards]
+
