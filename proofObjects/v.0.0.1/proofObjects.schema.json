@@ -1,0 +1,125 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://github.com/opencustodian/schemas/proofObjects.schema.json",
+	"title": "OpenCustodian Proof Object",
+	"type": "object",
+	"description": "OpenCustodian proof object schema.",
+
+	"properties": {
+		"$schema": {
+			"title": "Schema",
+			"type": "string",
+			"format": "uri-reference",
+			"description": "The schema that the document should conform to."
+		},
+
+		"$comment": {
+			"title": "Comment",
+			"type": "string",
+			"description": "An optional comment string that can be used to document the purpose of the file."
+		},
+
+		"metadata": {
+			"$ref": "#/$metadata/main"
+		},
+
+		"payload": {
+			"$ref": "#/$payload/main"
+		}
+	},
+
+	"required": [
+		"metadata",
+		"payload"
+	],
+	"additionalProperties": false,
+
+	"$metadata": {
+		"main": {
+			"title": "Proof object metadata",
+			"type": "object",
+			"description": "Identifies the specific proof standard and version.",
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"proof-of-reserves",
+						"proof-of-liabilities",
+						"user-info"
+					],
+					"description": "Identifier of the proof standard."
+				},
+				"format": {
+					"type": "string",
+					"description": "Format of the proof standard."
+				},
+				"version": {
+					"$ref": "#/$defs/semver"
+				},
+				"externalDataSources": {
+					"$ref": "#/$metadata/externalDataSources",
+					"description": "Optional external data-source declaration. `$external` is set once, then files are listed in `files`."
+				}
+			},
+			"required": [
+				"type",
+				"format",
+				"version"
+			],
+			"additionalProperties": false
+		},
+
+		"externalDataSources": {
+			"title": "External data sources",
+			"type": "object",
+			"description": "External data-source declaration for this proof object.",
+			"properties": {
+				"$external": {
+					"type": "boolean",
+					"const": true,
+					"description": "Marker indicating external data sources are declared for this proof object."
+				},
+				"files": {
+					"type": "array",
+					"description": "List of external files that payload fields can reference by `index`.",
+					"items": {
+						"$ref": "#/$metadata/externalFileReference"
+					},
+					"minItems": 1
+				}
+			},
+			"required": [
+				"$external",
+				"files"
+			],
+			"additionalProperties": false
+		},
+
+		"externalFileReference": {
+				"$ref": "https://github.com/opencustodian/schemas/formats/common-definitions.schema.json#/$defs/externalFileReference"
+		}
+	},
+
+	"$payload": {
+		"main": {
+			"title": "Proof payload",
+			"type": "object",
+			"description": "Proof payload defined by the referenced standard. Payload is always present and may include pointers/selection rules into `metadata.externalDataSources` by `index`.",
+			"additionalProperties": true,
+			"not": {
+				"required": [
+					"$external"
+				]
+			}
+		}
+	},
+
+	"$defs": {
+		"semver": {
+			"title": "Semantic version",
+			"type": "string",
+			"pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*))?$",
+			"description": "Version string in semver-like format: major.minor or major.minor.patch."
+		}
+	}
+}

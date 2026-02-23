@@ -1,0 +1,35 @@
+{
+  "$schema": "https://github.com/opencustodian/schemas/proofObjects.schema.json",
+  "$comment": "Sample proof object including all optional schema-defined fields.",
+  "metadata": {
+    "type": "proof-of-reserves",
+    "format": "merkle-tree",
+    "version": "0.0.1",
+    "externalDataSources": {
+      "$external": true,
+      "files": [
+        {
+          "index": 0,
+          "uri": "file:///data/liabilities.csv",
+          "format": "csv",
+          "encoding": "utf-8",
+          "hash": {
+            "algorithm": "sha256",
+            "value": "a3c7f2e8b9d1f4e6c8a2b5d7f9e1c3a5b7d9f1e3c5a7b9d1f3e5c7a9b1d3f5e7"
+          }
+        },
+        {
+          "index": 1,
+          "uri": "https://example.com/account-map.csv",
+          "format": "csv",
+          "encoding": "utf-8",
+          "hash": {
+            "algorithm": "sha256",
+            "value": "f1e2d3c4b5a6978877665544332211aaffeeccdd00112233445566778899aabb"
+          }
+        }
+      ]
+    }
+  },
+  "payload": {}
+}
