@@ -52,6 +52,8 @@ Note: The current project philosophy and evolving technical notes are tracked in
 
 ### Using the Standard
 
+`hashSignature.contentHash` is required; `hashSignature.custodianSignature` is optional.
+
 ```json
 {
   "$schema": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/envelope/v0.0.1/envelope.schema.json",
@@ -79,6 +81,10 @@ Note: The current project philosophy and evolving technical notes are tracked in
   "hashSignature": {
     "contentHash": {
       "algorithm": "SHA-256",
+      "value": "..."
+    },
+    "custodianSignature": {
+      "algorithm": "Ed25519",
       "value": "..."
     }
   }
