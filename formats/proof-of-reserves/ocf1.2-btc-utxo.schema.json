@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1.2-btc-utxo.schema.json",
+  "$id": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1.2-btc-utxo.schema.json",
   "title": "Proof-of-Reserves BTC UTXO Snapshot",
   "OCF": "1.2",
   "version": "DRAFT",

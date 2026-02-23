@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json",
+  "$id": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-liabilities/ocf2-field-registry.schema.json",
   "title": "OCF2 Proof-of-Liabilities Field Registry",
   "OCF": "2",
   "version": "DRAFT",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1.1-holding.schema.json",
+  "$id": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1.1-holding.schema.json",
   "title": "Proof-of-Reserves Holdings",
   "OCF": "1.1",
   "version": "DRAFT",
@@ -8,7 +8,7 @@
   "type": "object",
   "properties": {
     "snapshotAt": {
-      "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/snapshotAt"
+      "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/snapshotAt"
     },
     "holdings": {
       "$ref": "#/$defs/holdings"
@@ -29,22 +29,22 @@
       "description": "Single reserve holding record (address-level).",
       "properties": {
         "assetSymbol": {
-          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/assetSymbol"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/assetSymbol"
         },
         "network": {
-          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/network"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/network"
         },
         "address": {
-          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/address"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/address"
         },
         "balance": {
-          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/balance"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/balance"
         },
         "blockHeight": {
-          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/blockHeight"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/blockHeight"
         },
         "thirdPartyCustodianName": {
-          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/thirdPartyCustodianName"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1-field-registry.schema.json#/$defs/thirdPartyCustodianName"
         }
       },
       "required": [
@@ -58,7 +58,7 @@
     "holdingFieldSelector": {
       "allOf": [
         {
-          "$ref": "https://github.com/opencustodian/schemas/formats/common-definitions.schema.json#/$defs/fieldSelector"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/common-definitions.schema.json#/$defs/fieldSelector"
         },
         {
           "properties": {

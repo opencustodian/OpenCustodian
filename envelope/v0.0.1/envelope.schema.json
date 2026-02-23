@@ -1,16 +1,16 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://github.com/opencustodian/schemas/envelope.schema.json",
+    "$id": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/envelope/v0.0.1/envelope.schema.json",
     "title": "OpenCustodian Envelope Schema",
     "type": "object",
-    "description": "OpenCustodian top-level envelope schema. Specification located at https://github.com/opencustodian/specifications/blob/main/envelope.md",
+    "description": "OpenCustodian top-level envelope schema. Specification located at https://github.com/opencustodian/OpenCustodian/blob/main/SPECIFICATION.md",
 
     "properties": {
         "$schema": {
             "title": "Schema",
             "type": "string",
             "format": "uri-reference",
-            "description": "The schema that the document should conform to. This should be the URL of a version of the OpenCustodian JSON schemas available under https://github.com/opencustodian/specifications/tree/main/schemas."
+            "description": "The schema that the document should conform to. This should be the URL of a version of the OpenCustodian JSON schemas available under https://github.com/opencustodian/OpenCustodian/tree/main/."
         },
 
         "$comment": {

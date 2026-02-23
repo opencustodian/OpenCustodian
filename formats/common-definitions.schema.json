@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"$id": "https://github.com/opencustodian/schemas/formats/common-definitions.schema.json",
+	"$id": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/common-definitions.schema.json",
 	"title": "External file reference",
 	"type": "object",
 	"description": "Single external file entry referenced by index.",

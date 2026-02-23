@@ -1,5 +1,5 @@
 {
-  "$schema": "https://github.com/opencustodian/schemas/proofObjects.schema.json",
+  "$schema": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/proofObjects/v.0.0.1/proofObjects.schema.json",
   "$comment": "Sample proof object including all optional schema-defined fields.",
   "metadata": {
     "type": "proof-of-reserves",

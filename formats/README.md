@@ -136,7 +136,7 @@ Use these schemas as **reference examples** when designing your own proof format
 
 ```json
 {
-  "$schema": "https://github.com/opencustodian/schemas/proofObjects.schema.json",
+  "$schema": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/proofObjects/v.0.0.1/proofObjects.schema.json",
   "metadata": {
     "type": "proof-of-reserves",
     "format": "custom-format-name",

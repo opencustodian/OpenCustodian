@@ -1,0 +1,67 @@
+name: Bug report
+description: Report an error or defect in schemas, docs, or tooling
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve OpenCustodian.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Short description of the bug
+      placeholder: Validation fails for valid OCF1.2 sample
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_behavior
+    attributes:
+      label: Current behavior
+      description: What happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Provide exact steps, commands, and sample input.
+      placeholder: |
+        1. Run ...
+        2. Validate ...
+        3. Observe error ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected_files
+    attributes:
+      label: Affected files/schemas
+      description: List file paths such as formats/proof-of-reserves/ocf1.1-holding.schema.json
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output
+      description: Paste relevant logs or validator errors
+      render: shell
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Node version, and validator/tool used
+      placeholder: macOS 14, Node 20, ajv-cli 5.x

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-reserves/ocf1-field-registry.schema.json",
+  "$id": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-reserves/ocf1-field-registry.schema.json",
   "title": "Proof-of-Reserves Field Registry",
   "OCF": "1",
   "version": "DRAFT",

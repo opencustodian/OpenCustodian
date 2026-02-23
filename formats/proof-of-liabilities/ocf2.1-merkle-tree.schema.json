@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2.1-merkle-tree.schema.json",
+  "$id": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-liabilities/ocf2.1-merkle-tree.schema.json",
   "title": "Merkle Tree Proof-of-Liabilities Standard",
   "OCF": "2.1",
   "version": "DRAFT",
@@ -8,20 +8,20 @@
   "type": "object",
   "properties": {
     "snapshotAt": {
-      "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/snapshotAt"
+      "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/snapshotAt"
     },
     "liabilityBreakdown": {
       "type": "object",
       "description": "Optional breakdown of liabilities by type (user-balance, rewards, etc.) with totals.",
       "additionalProperties": {
-        "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/totalLiabilityAmount"
+        "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/totalLiabilityAmount"
       }
     },
     "users": {
       "$ref": "#/$defs/users"
     },
     "merkleRoot": {
-      "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/merkleRoot",
+      "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/merkleRoot",
       "description": "Merkle root (hex) committing to the complete set of user liabilities included in this snapshot."
     },
     "userCount": {
@@ -46,13 +46,13 @@
       "description": "Single user liability record.",
       "properties": {
         "userId": {
-          "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/userId"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/userId"
         },
         "balances": {
           "type": "object",
           "description": "Per-asset balance map.",
           "additionalProperties": {
-            "$ref": "https://github.com/opencustodian/schemas/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/balance"
+            "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/proof-of-liabilities/ocf2-field-registry.schema.json#/$defs/balance"
           },
           "minProperties": 1
         }
@@ -66,7 +66,7 @@
     "userFieldSelector": {
       "allOf": [
         {
-          "$ref": "https://github.com/opencustodian/schemas/formats/common-definitions.schema.json#/$defs/fieldSelector"
+          "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/common-definitions.schema.json#/$defs/fieldSelector"
         },
         {
           "properties": {

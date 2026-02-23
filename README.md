@@ -4,6 +4,8 @@
 
 OpenCustodian enables applications, APIs, and AI agents to automatically understand and interact with exchange reserve data without requiring custom integrations for each platform.
 
+Repository: https://github.com/opencustodian/OpenCustodian
+
 ---
 
 ## Project Structure
@@ -14,8 +16,8 @@ OpenCustodian is organized into two main components:
 
 The core standard consists of two foundational schemas that define the container and proof object structure:
 
-- **[envelope.schema.json](envelope.schema.json)** - The outermost container that wraps all proof objects
-- **[proofObjects.schema.json](proofObjects.schema.json)** - The structure for individual proof objects
+- **[envelope.schema.json](envelope/v0.0.1/envelope.schema.json)** - The outermost container that wraps all proof objects
+- **[proofObjects.schema.json](proofObjects/v.0.0.1/proofObjects.schema.json)** - The structure for individual proof objects
 
 These core schemas are **stable** and define the fundamental architecture of OpenCustodian. They provide:
 - Metadata structure for custodian identification
@@ -41,16 +43,18 @@ See [formats/README.md](formats/README.md) for details on the experimental forma
 
 ### Understanding the Standard
 
-1. Read [soul.md](soul.md) for the complete vision and philosophy
-2. Review [envelope.schema.json](envelope.schema.json) to understand the container structure
-3. Review [proofObjects.schema.json](proofObjects.schema.json) to understand proof object structure
+1. Read [SPECIFICATION.md](SPECIFICATION.md) for the complete vision and philosophy
+2. Review [envelope.schema.json](envelope/v0.0.1/envelope.schema.json) to understand the container structure
+3. Review [proofObjects.schema.json](proofObjects/v.0.0.1/proofObjects.schema.json) to understand proof object structure
 4. Explore [formats/](formats/) to see example format implementations
+
+Note: The current project philosophy and evolving technical notes are tracked in [SPECIFICATION.md](SPECIFICATION.md).
 
 ### Using the Standard
 
 ```json
 {
-  "$schema": "https://github.com/opencustodian/schemas/envelope.schema.json",
+  "$schema": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/envelope/v0.0.1/envelope.schema.json",
   "metadata": {
     "format": "OpenCustodian",
     "version": "0.0.1",
@@ -84,17 +88,14 @@ See [formats/README.md](formats/README.md) for details on the experimental forma
 ### Validation & Testing
 
 ```bash
-# Install dependencies
-npm install
-
 # Generate sample data
-npm run generate
+node tests/scripts/generate-samples.js
 
 # Validate samples
-npm run validate
+node tests/scripts/validate-samples.js
 
-# Run all tests
-npm test
+# (Optional) run both in sequence
+node tests/scripts/generate-samples.js && node tests/scripts/validate-samples.js
 ```
 
 ---
@@ -105,14 +106,22 @@ npm test
 
 ```
 OpenCustodian/
-├── envelope.schema.json          # 🔷 CORE: Outermost container
-├── proofObjects.schema.json      # 🔷 CORE: Proof object structure
+├── envelope/
+│   └── v0.0.1/
+│       ├── envelope.schema.json          # 🔷 CORE: Outermost container
+│       └── examples/
+│           └── envelope.sample.json
+├── proofObjects/
+│   └── v.0.0.1/
+│       ├── proofObjects.schema.json      # 🔷 CORE: Proof object structure
+│       └── examples/
+│           └── proofObjects.sample.json
 ├── formats/                      # 🚧 EXPERIMENTAL: Format examples
 │   ├── common-definitions.schema.json
 │   ├── proof-of-reserves/
 │   ├── proof-of-liabilities/
 │   └── user-info/
-├── soul.md                       # Project philosophy & vision
+├── SPECIFICATION.md              # Project philosophy & evolving notes
 └── tests/                        # Validation & testing
 ```
 
@@ -173,10 +182,13 @@ OpenCustodian/
 
 ## Documentation
 
-- **[soul.md](soul.md)** - Complete project vision, philosophy, and technical details
+- **[SPECIFICATION.md](SPECIFICATION.md)** - Project philosophy and technical notes
 - **[formats/README.md](formats/README.md)** - Experimental format specifications
-- **[envelope.sample.json](envelope.sample.json)** - Example envelope document
-- **[proofObjects.sample.json](proofObjects.sample.json)** - Example proof object
+- **[envelope/v0.0.1/examples/envelope.sample.json](envelope/v0.0.1/examples/envelope.sample.json)** - Example envelope document
+- **[proofObjects/v.0.0.1/examples/proofObjects.sample.json](proofObjects/v.0.0.1/examples/proofObjects.sample.json)** - Example proof object
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** - Community standards
+- **[SECURITY.md](SECURITY.md)** - Security reporting policy
 
 ---
 
@@ -201,5 +213,5 @@ OpenCustodian aims to be the HTTP of exchange transparency - a universal standar
 
 ## License
 
-[To be determined - suggest MIT or Apache 2.0 for open standards]
+[CC0 1.0 Universal](LICENSE)
 
