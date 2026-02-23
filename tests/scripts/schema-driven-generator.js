@@ -16,6 +16,25 @@ class SchemaResolver {
    * Map OpenCustodian URLs to local file paths
    */
   resolveUrl(url) {
+    if (url === 'https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/common-definitions.schema.json') {
+      return path.join(this.schemaRoot, 'common-definitions.schema.json');
+    }
+
+    if (url.startsWith('https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/')) {
+      const relative = url.replace('https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/formats/', '');
+      return path.join(this.schemaRoot, relative);
+    }
+
+    if (url.startsWith('https://github.com/opencustodian/OpenCustodian/tree/main/formats/')) {
+      const relative = url.replace('https://github.com/opencustodian/OpenCustodian/tree/main/formats/', '');
+      return path.join(this.schemaRoot, relative);
+    }
+
+    if (url.startsWith('https://github.com/opencustodian/OpenCustodian/blob/main/formats/')) {
+      const relative = url.replace('https://github.com/opencustodian/OpenCustodian/blob/main/formats/', '');
+      return path.join(this.schemaRoot, relative);
+    }
+
     if (url === 'https://github.com/opencustodian/schemas/formats/common-definitions.schema.json') {
       return path.join(this.schemaRoot, 'common-definitions.schema.json');
     }

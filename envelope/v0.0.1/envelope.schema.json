@@ -97,7 +97,7 @@
             "type": "array",
             "description": "Array of proof objects formatted according to standards defined in separate specification files.",
             "items": {
-                "$ref": "proofObjects.schema.json"
+                "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/proofObjects/v.0.0.1/proofObjects.schema.json"
             }
         }
     },
