@@ -58,7 +58,6 @@ Note: The current project philosophy and evolving technical notes are tracked in
 {
   "$schema": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/envelope/v0.0.1/envelope.schema.json",
   "metadata": {
-    "format": "OpenCustodian",
     "version": "0.0.1",
     "generatedAt": "2026-02-23T12:00:00Z",
     "custodian": {
@@ -66,18 +65,21 @@ Note: The current project philosophy and evolving technical notes are tracked in
       "custodianId": "example.exchange"
     }
   },
-  "proofObjects": [
-    {
-      "metadata": {
-        "type": "proof-of-reserves",
-        "format": "custom-or-ocf-format",
-        "version": "0.0.1"
-      },
-      "payload": {
-        /* Your proof data here */
+  "payload": {
+    "format": "OpenCustodian",
+    "proofObjects": [
+      {
+        "metadata": {
+          "type": "proof-of-reserves",
+          "format": "custom-or-ocf-format",
+          "version": "0.0.1"
+        },
+        "payload": {
+          /* Your proof data here */
+        }
       }
-    }
-  ],
+    ]
+  },
   "hashSignature": {
     "contentHash": {
       "algorithm": "SHA-256",

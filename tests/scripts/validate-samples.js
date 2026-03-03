@@ -71,7 +71,7 @@ function validateAll() {
 }
 
 function validateEnvelope(data, filename) {
-  const required = ['metadata', 'proofObjects', 'hashSignature'];
+  const required = ['metadata', 'payload', 'hashSignature'];
   const missing = required.filter(field => !(field in data));
 
   if (missing.length > 0) {
@@ -82,22 +82,30 @@ function validateEnvelope(data, filename) {
 
   // Validate metadata
   const meta = data.metadata;
-  if (!meta.format || !meta.version || !meta.generatedAt || !meta.custodian) {
+  if (!meta.version || !meta.generatedAt || !meta.custodian) {
     console.log(`✗ Envelope Metadata - ${filename}`);
     console.log(`  Invalid metadata structure`);
     return false;
   }
 
+  // Validate payload
+  const payload = data.payload;
+  if (!payload || payload.format !== 'OpenCustodian' || !Array.isArray(payload.proofObjects)) {
+    console.log(`✗ Envelope Payload - ${filename}`);
+    console.log(`  Invalid payload structure`);
+    return false;
+  }
+
   // Validate proofObjects is array
-  if (!Array.isArray(data.proofObjects) || data.proofObjects.length === 0) {
+  if (payload.proofObjects.length === 0) {
     console.log(`✗ Envelope Structure - ${filename}`);
     console.log(`  proofObjects must be non-empty array`);
     return false;
   }
 
   // Validate each proof object
-  for (let i = 0; i < data.proofObjects.length; i++) {
-    const proof = data.proofObjects[i];
+  for (let i = 0; i < payload.proofObjects.length; i++) {
+    const proof = payload.proofObjects[i];
     if (!proof.metadata || !proof.metadata.type || !proof.payload) {
       console.log(`✗ Envelope Structure - ${filename}`);
       console.log(`  Invalid proof object structure at index ${i}`);

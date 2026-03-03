@@ -1,9 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/envelope/v0.0.1/examples/envelope.sample.json",
-  "$comment": "Dummy data",
   "metadata": {
-    "format": "OpenCustodian",
     "version": "0.0.1",
     "generatedAt": "2026-01-01T00:00:00Z",
     "custodian": {
@@ -11,7 +7,10 @@
       "custodianId": "dummy.example"
     }
   },
-  "proofObjects": [],
+  "payload": {
+    "format": "OpenCustodian",
+    "proofObjects": []
+  },
   "hashSignature": {
     "contentHash": {
       "algorithm": "SHA-256",

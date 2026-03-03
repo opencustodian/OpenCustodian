@@ -4,72 +4,58 @@
     "title": "OpenCustodian Envelope Schema",
     "type": "object",
     "description": "OpenCustodian top-level envelope schema. Specification located at https://github.com/opencustodian/OpenCustodian/blob/main/SPECIFICATION.md",
-
     "properties": {
         "$schema": {
             "title": "Schema",
             "type": "string",
             "format": "uri-reference",
-            "description": "The schema that the document should conform to. This should be the URL of a version of the OpenCustodian JSON schemas available under https://github.com/opencustodian/OpenCustodian/tree/main/."
+            "description": "The schema URL that the document should conform to, referencing the OpenCustodian envelope schema."
         },
-
         "$comment": {
-            "title": "Comment",
+            "title": "Schema",
             "type": "string",
             "description": "An optional comment string that can be used to document the purpose of the file."
         },
-
         "metadata": {
             "$ref": "#/$metadata/main"
         },
-
-        "proofObjects": {
-            "$ref": "#/$top/proofObjects"
+        "payload": {
+            "$ref": "#/$payload/main"
         },
-
         "hashSignature": {
             "$ref": "#/$hashSignature/main"
         }
     },
-
     "required": [
         "metadata",
-        "proofObjects",
+        "payload",
         "hashSignature"
     ],
     "additionalProperties": false,
-
     "$metadata": {
         "main": {
             "title": "Envelope metadata",
             "type": "object",
             "properties": {
-                "format": {
-                    "title": "Envelope format",
-                    "type": "string",
-                    "const": "OpenCustodian"
-                },
                 "version": {
                     "title": "Envelope version",
-                    "$ref": "#/$definitions/semver"
+                    "$ref": "#/$defs/semver"
                 },
                 "generatedAt": {
                     "title": "Generation timestamp",
-                    "$ref": "#/$definitions/iso8601DateTime"
+                    "$ref": "#/$defs/iso8601DateTime"
                 },
                 "custodian": {
                     "$ref": "#/$metadata/custodian"
                 }
             },
             "required": [
-                "format",
                 "version",
                 "generatedAt",
                 "custodian"
             ],
             "additionalProperties": false
         },
-
         "custodian": {
             "title": "Custodian identity",
             "type": "object",
@@ -90,18 +76,32 @@
             "additionalProperties": false
         }
     },
-
-    "$top": {
-        "proofObjects": {
-            "title": "Proof objects",
-            "type": "array",
-            "description": "Array of proof objects formatted according to standards defined in separate specification files.",
-            "items": {
-                "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/proofObjects/v.0.0.1/proofObjects.schema.json"
-            }
+    "$payload": {
+        "main": {
+            "title": "Envelope payload",
+            "type": "object",
+            "properties": {
+                "format": {
+                    "title": "OpenCustodian identifier",
+                    "type": "string",
+                    "const": "OpenCustodian"
+                },
+                "proofObjects": {
+                    "title": "Proof objects",
+                    "type": "array",
+                    "description": "Array of proof objects formatted according to standards defined in separate specification files.",
+                    "items": {
+                        "$ref": "https://raw.githubusercontent.com/opencustodian/OpenCustodian/main/proofObjects/v.0.0.1/proofObjects.schema.json"
+                    }
+                }
+            },
+            "required": [
+                "format",
+                "proofObjects"
+            ],
+            "additionalProperties": false
         }
     },
-
     "$hashSignature": {
         "main": {
             "title": "Hash and signature envelope",
@@ -119,7 +119,6 @@
             ],
             "additionalProperties": false
         },
-
         "contentHash": {
             "title": "Content hash",
             "type": "object",
@@ -132,7 +131,7 @@
                     "description": "Identifier of the hash algorithm used for the hash."
                 },
                 "value": {
-                    "$ref": "#/$definitions/hashHex64"
+                    "$ref": "#/$defs/hashHex64"
                 }
             },
             "required": [
@@ -141,7 +140,6 @@
             ],
             "additionalProperties": false
         },
-
         "custodianSignature": {
             "title": "Custodian signature",
             "type": "object",
@@ -165,8 +163,7 @@
             "additionalProperties": false
         }
     },
-
-    "$definitions": {
+    "$defs": {
         "semver": {
             "title": "Semantic version",
             "type": "string",

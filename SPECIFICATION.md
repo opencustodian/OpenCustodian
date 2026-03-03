@@ -34,22 +34,17 @@ Schema location:
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `format` | string | Yes | Must be constant `OpenCustodian` |
 | `metadata` | object | Yes | Envelope identity and generation metadata |
 | `proofObjects` | array | Yes | Array of proof objects |
 | `hashSignature` | object | Yes | Hash commitment and optional signature |
 
 Additional top-level fields are not allowed (`additionalProperties: false`).
 
-### Optional top-level fields
-
-- `$schema` (uri-reference)
-- `$comment` (string)
-
 ### `metadata` object
 
 | Field | Type | Required | Rule |
 |---|---|---|---|
-| `format` | string | Yes | Must be constant `OpenCustodian` |
 | `version` | string | Yes | Semver-like pattern `major.minor` or `major.minor.patch` |
 | `generatedAt` | string | Yes | ISO-8601 timestamp |
 | `custodian` | object | Yes | Custodian identity block |
@@ -184,8 +179,8 @@ Repository scripts:
 
 ```json
 {
+  "format": "OpenCustodian",
   "metadata": {
-    "format": "OpenCustodian",
     "version": "0.0.1",
     "generatedAt": "2026-01-01T00:00:00Z",
     "custodian": {
